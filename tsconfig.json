@@ -10,13 +10,18 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
     "composite": true,
-  },
+    "baseUrl": ".",   
+    "paths": {
+      "@/*": ["src/*"],   
+      "@vitejs/*": ["node_modules/*"]  
+    }
+  }, 
   "include": ["src"],
   "files": [],
   "references": [
