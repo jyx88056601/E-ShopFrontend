@@ -1,4 +1,5 @@
 // import axios, { AxiosRequestConfig } from 'axios';
+import { UserSignupDTO } from '@/hooks/entities';
 import axios from 'axios'
 ;
 export interface FetchResponse<T> {
@@ -37,6 +38,17 @@ class APIClient<T> {
     const res = await axiosInstance.get<FetchResponse<T>>(this.endpoint);
     return res.data;
   }
+
+  signup = async (userSignupDTO : UserSignupDTO) => {
+    const res = await axiosInstance.post<UserSignupDTO>(this.endpoint,userSignupDTO);
+    console.log(res.data);
+  }
+
+  // check = async (username: string) => {
+  //   // 使用 await 来等待 Promise 完成
+  //   const res = await axiosInstance.post<string>(this.endpoint, { username });
+  //   return res.data; // 现在 res 是 AxiosResponse，data 就是正确的
+  // }
 }
 
 export default APIClient;

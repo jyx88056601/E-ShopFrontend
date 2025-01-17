@@ -1,4 +1,14 @@
-import { Box, Flex, Grid, GridItem } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Select,
+  Heading,
+  SimpleGrid,
+  Show,
+  List,
+} from '@chakra-ui/react';
 
 const Homepage = () => {
   return (
@@ -12,11 +22,25 @@ const Homepage = () => {
         lg: '200px 1fr',
       }}
     >
+      <Show above="lg">
+        <GridItem area="aside" padding={5}>
+          <List />
+          {/* <GenreList /> */}
+        </GridItem>
+      </Show>
+
       <GridItem area="main">
         <Flex paddingLeft={2} marginBottom={5}>
-          <Box marginRight={5}></Box>
-          <Box marginRight={5}></Box>
+          <Box marginRight={5}>
+            <Select />
+          </Box>
+          <Box marginRight={5}>
+            <Select />
+          </Box>
+          <Heading />
         </Flex>
+        <SimpleGrid />
+        {/* <GameGrid /> */}
       </GridItem>
     </Grid>
   );
