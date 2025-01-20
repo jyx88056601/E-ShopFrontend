@@ -1,5 +1,5 @@
-import { Role, UserSignupDTO } from '../hooks/entities';
-import APIClient from '../service/apiClient';
+import DefaultAPIClient from '@/service/DefaultAPIClient';
+import { Role, UserSignupDTO } from '../data/entities';
 import {
   HStack,
   Input,
@@ -8,6 +8,7 @@ import {
   Text,
   Button,
   Container,
+  VStack,
 } from '@chakra-ui/react';
 import {
   FormControl,
@@ -16,11 +17,12 @@ import {
   FormLabel,
 } from '@chakra-ui/react/form-control';
 import { useState } from 'react';
-
-const apiClient = new APIClient<UserSignupDTO>('/signup');
+import { useNavigate } from 'react-router-dom';
+const defaultAPIClient = new DefaultAPIClient('/signup');
 // const apiCheck = new APIClient<String>('/check-user-name');
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   // handle username input
   const [username, setUsername] = useState('');
   // const [userExist, setUserExist] = useState(false);
@@ -92,12 +94,15 @@ const SignUpForm = () => {
   const handleRadioGroup = (value: string): void => {
     if (value === 'Personal') {
       setRole(Role.ROLE_BUYER);
-    } else if (value === 'Business') {
+    } else {
       setRole(Role.ROLE_SELLER);
     }
     setRadioRole(radioRole);
     setRoleSetup(true);
   };
+
+  // sign up response
+  const [signUpResponse, setSignUpResponse] = useState('');
 
   const isInputValid =
     roleSetup &&
@@ -138,12 +143,23 @@ const SignUpForm = () => {
     if (!isInputValid) return;
     const userSignupDTO: UserSignupDTO = {
       username,
-      password,
       email,
       phoneNumber,
+      password,
       role,
     };
-    apiClient.signup(userSignupDTO);
+
+    defaultAPIClient
+      .signup(userSignupDTO)
+      .then((response) => {
+        console.log(response);
+        navigate('/login');
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          setSignUpResponse(error.response.data);
+        }
+      });
   }
 
   return (
@@ -264,13 +280,18 @@ const SignUpForm = () => {
             </HStack>
           </RadioGroup>
         </FormControl>
-        <Button
-          type="submit"
-          loadingText="Signing up"
-          sx={isInputValid ? submitButtonProps : submitButtonInitProps}
-        >
-          Sign up
-        </Button>
+        <VStack>
+          <Button
+            type="submit"
+            loadingText="Signing up"
+            sx={isInputValid ? submitButtonProps : submitButtonInitProps}
+          >
+            Sign up
+          </Button>
+          {signUpResponse.length !== 0 ? (
+            <Text color={'red.300'}>{signUpResponse} </Text>
+          ) : null}
+        </VStack>
       </form>
     </Container>
   );
