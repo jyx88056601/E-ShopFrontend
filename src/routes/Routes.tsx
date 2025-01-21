@@ -8,10 +8,9 @@ import SignupPage from '../pages/SignupPage';
 
 const router = createBrowserRouter([
   {
-    path: '/', // location
-    element: <Layout />, // content that could be insert to the position of <Outlet /> component where it is in <Layout /> after <Nav />
+    path: '/',
+    element: <Layout />,
     children: [
-      // contents selector
       { path: '/', element: <Homepage /> },
       { path: '/signup', element: <SignupPage /> },
       { path: '/login', element: <LoginPage /> },

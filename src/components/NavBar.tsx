@@ -1,8 +1,8 @@
 import { HStack, Image } from '@chakra-ui/react'; // horizontal stack
-// import image from the folder
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
 import UserStatus from './UserStatus';
+
 const NavBar = () => {
   return (
     <HStack
