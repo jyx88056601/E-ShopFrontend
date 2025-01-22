@@ -1,34 +1,37 @@
-import {
-  Button,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
-  MenuList,
-} from '@chakra-ui/react';
+import { DataPanel } from '@/components/AdminPage/DataPanel';
+import AdminMenu from '../components/AdminPage/AdminMenu';
+import { useState } from 'react';
+import { Heading } from '@chakra-ui/react';
+
+const handleSequence = (sequenceNumber: number): string => {
+  switch (sequenceNumber) {
+    case 1:
+      return 'Displaying registered users';
+    case 2:
+      return 'Displaying personal accounts';
+    case 3:
+      return 'Displaying business accounts';
+    case 4:
+      return 'Displaying all orders';
+    case 5:
+      return 'Displaying pending orders';
+    case 6:
+      return 'Displaying finished orders';
+    default:
+      return 'Please select a menu option to display data.';
+  }
+};
 
 const AdminPage = () => {
+  const [sequenceNumber, setSequenceNumber] = useState(0);
+
   return (
     <>
-      <Menu>
-        <MenuButton as={Button} color={'whiteAlpha.900'}>
-          Data Management
-        </MenuButton>
-        <MenuList>
-          <MenuGroup title="Users">
-            <MenuItem>Display registered users</MenuItem>
-            <MenuItem>Display personal accounts</MenuItem>
-            <MenuItem>Display business accounts </MenuItem>
-          </MenuGroup>
-          <MenuDivider />
-          <MenuGroup title="Orders">
-            <MenuItem>Display all orders</MenuItem>
-            <MenuItem>Display pending orders</MenuItem>
-            <MenuItem>Display finished orders</MenuItem>
-          </MenuGroup>
-        </MenuList>
-      </Menu>
+      <Heading size={'sm'} textAlign="center">
+        {handleSequence(sequenceNumber)}
+      </Heading>
+      <AdminMenu setSequence={setSequenceNumber} />
+      <DataPanel sequenceNumber={sequenceNumber} />
     </>
   );
 };
