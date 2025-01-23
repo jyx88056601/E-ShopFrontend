@@ -1,3 +1,4 @@
+import { UserUpdateDTO } from "@/components/AdminPage/UserInfo";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
  
@@ -13,11 +14,21 @@ class AdminAPIClient {
         baseURL: 'http://localhost:8080/admin', 
         headers: {
             Authorization: token ? `Bearer ${token}` : '',
+            'Content-Type': 'application/json',  
+      
           } 
       });
     }
   
     // get
+    public findUserById() : Promise<AxiosResponse>  {
+      return this.axiosInstance.get(this.endpoint, {
+          params: {
+            username:  this.username,
+          }
+        });
+   }
+
     public getUsers(): Promise<AxiosResponse> {
         return this.axiosInstance.get(this.endpoint, {
             params: {
@@ -26,14 +37,35 @@ class AdminAPIClient {
           });
      }
 
-     public toggleUser() :Promise<AxiosResponse>  {
+     // put
+     public toggleUser() : Promise<AxiosResponse>  {
         return this.axiosInstance.put(this.endpoint, {
             params: {
               username:  this.username,
             }
           });
      }
-  
+
+     public updateUser(userUpdateDTO : UserUpdateDTO) : Promise<AxiosResponse>  { 
+        return this.axiosInstance.put(this.endpoint, userUpdateDTO, {
+          params: {
+            username: this.username
+          }
+        });
+     }
+
+     // delete
+     public deleteUserByUsername() :Promise<AxiosResponse>  {
+        return this.axiosInstance.delete(this.endpoint, {
+            params: {
+              username:  this.username,
+            }
+          });
+     }
+
+
+     
+    
  
   }
   

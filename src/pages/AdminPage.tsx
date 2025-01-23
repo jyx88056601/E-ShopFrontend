@@ -23,7 +23,7 @@ const handleSequence = (sequenceNumber: number): string => {
 };
 
 const AdminPage = () => {
-  const [sequenceNumber, setSequenceNumber] = useState(0);
+  const [sequenceNumber, setSequenceNumber] = useState(1);
 
   return (
     <>

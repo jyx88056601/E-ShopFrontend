@@ -22,23 +22,23 @@ const LoginForm = () => {
     password: '',
   });
 
-  function handleInputUsername(
+  const handleInputUsername = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  ): void => {
     setUser((user) => ({
       ...user,
       username: event.target.value,
     }));
-  }
+  };
 
-  function handleInputPassword(
+  const handleInputPassword = (
     event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  ): void => {
     setUser((user) => ({
       ...user,
       password: event.target.value,
     }));
-  }
+  };
 
   function handleSubmit(event: React.FormEvent): void {
     event.preventDefault();
@@ -54,6 +54,7 @@ const LoginForm = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('id', response.data.id);
         localStorage.setItem('username', response.data.username);
+        localStorage.setItem('role', response.data.role);
         setUsername(localStorage.getItem('username'));
         if (response.data.role == 'ROLE_ADMIN') {
           navigate('/admin');

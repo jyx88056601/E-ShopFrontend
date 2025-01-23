@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const UserDataPanel = () => {
+const BusinessUserPanel = () => {
   type User = {
     username: string;
     email: string;
@@ -43,7 +43,10 @@ const UserDataPanel = () => {
       adminAPIClinet
         .getUsers()
         .then((response) => {
-          setUserData(response.data['userDTOS']);
+          const filteredUsers = response.data['userDTOS'].filter(
+            (user: User) => user.role === 'ROLE_SELLER'
+          );
+          setUserData(filteredUsers);
         })
         .catch((error) => {
           console.error('Error fetching users:', error);
@@ -190,4 +193,4 @@ const UserDataPanel = () => {
   );
 };
 
-export default UserDataPanel;
+export default BusinessUserPanel;
