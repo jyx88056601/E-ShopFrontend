@@ -1,9 +1,20 @@
-import { HStack, Image } from '@chakra-ui/react'; // horizontal stack
-import { Link } from 'react-router-dom';
-import logo from '../assets/logo.webp';
+import { HStack } from '@chakra-ui/react'; // horizontal stack
+import { AiFillHome } from 'react-icons/ai';
 import UserStatus from './UserStatus';
+import { useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const clickHome = () => {
+    const role = localStorage.getItem('role');
+    if (role && role.length >= 5) {
+      navigate('/' + role.substring(5).toLocaleLowerCase());
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <HStack
       backgroundColor={'blackAlpha.900'}
@@ -14,9 +25,7 @@ const NavBar = () => {
       w="100%"
       px="24px"
     >
-      <Link to="/">
-        <Image src={logo} boxSize={35} objectFit="cover" />
-      </Link>
+      <AiFillHome color="white" size={25} onClick={clickHome} />
       <UserStatus />
     </HStack>
   );
