@@ -15,4 +15,25 @@ export enum Role {
     ROLE_BUYER,
     ROLE_SELLER
 }
- 
+
+
+export type ProductDTO = {
+    name : string;
+    price :  number;
+    stock : number;
+    category : string;
+    description : string;
+    images: File[];
+}
+
+
+export type ProdcutDetailDTO = {
+    id : string;
+    name: string;
+    price: string;
+    stock: string;
+    category: string;
+    createdTime: string;
+    updatedTime: string;
+    awsUrls: string[];
+}

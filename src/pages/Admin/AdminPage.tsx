@@ -1,5 +1,5 @@
-import { DataPanel } from '@/components/AdminPage/DataPanel';
-import AdminMenu from '../components/AdminPage/AdminMenu';
+import { DataPanel } from '@/components/Admin/DataPanel';
+import AdminMenu from '@/components/Admin/AdminMenu';
 import { useState } from 'react';
 import { Heading } from '@chakra-ui/react';
 

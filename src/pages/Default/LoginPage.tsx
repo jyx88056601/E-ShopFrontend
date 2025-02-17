@@ -1,4 +1,4 @@
-import LoginForm from '@/components/LoginForm';
+import LoginForm from '@/components/Default/LoginForm';
 import { Flex } from '@chakra-ui/react';
 
 const LoginPage = () => {

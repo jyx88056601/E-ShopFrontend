@@ -1,5 +1,5 @@
 import DefaultAPIClient from '@/service/DefaultAPIClient';
-import { Role, UserSignupDTO } from '../data/entities';
+import { Role, UserSignupDTO } from '../../data/entities';
 import {
   HStack,
   Input,

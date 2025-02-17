@@ -1,5 +1,5 @@
-import AddressForm from '@/components/AddressForm';
-import SignUpForm from '@/components/SignUpForm';
+import AddressForm from '@/components/Default/AddressForm';
+import SignUpForm from '@/components/Default/SignUpForm';
 import { Flex } from '@chakra-ui/react';
 const SignupPage = () => {
   return (

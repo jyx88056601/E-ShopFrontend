@@ -1,11 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Homepage from '../pages/HomePage';
-import ErrorPage from '../pages/ErrorPage';
-import Layout from '../pages/Layout';
-import AdminPage from '../pages/AdminPage';
-import LoginPage from '../pages/LoginPage';
-import SignupPage from '../pages/SignupPage';
-import AdminUserInfoPage from '@/pages/AdminUserInfoPage';
+import Homepage from '../pages/Default/HomePage';
+import ErrorPage from '../pages/Default/ErrorPage';
+import Layout from '../pages/Default/Layout';
+import AdminPage from '../pages/Admin/AdminPage';
+import LoginPage from '../pages/Default/LoginPage';
+import SignupPage from '../pages/Default/SignupPage';
+import AdminUserInfoPage from '@/pages/Admin/AdminUserInfoPage';
+import BusinessPage from "@/pages/Business/BusinessPage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: '/login', element: <LoginPage /> },
       { path: '/admin', element: <AdminPage /> },
       { path: '/admin/userinfo/:id', element: <AdminUserInfoPage /> },
+      { path: '/business', element: <BusinessPage /> },
     ],
     errorElement: <ErrorPage />,
   },

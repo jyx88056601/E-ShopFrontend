@@ -2,7 +2,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { Button, HStack, Text } from '@chakra-ui/react';
 import DefaultAPIClient from '@/service/DefaultAPIClient';
-import { useUser } from '../context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 const UserStatus = () => {
   const navigate = useNavigate();
