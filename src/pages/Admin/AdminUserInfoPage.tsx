@@ -1,4 +1,4 @@
-import UserInfo from '@/components/AdminPage/UserInfo';
+import UserInfo from '@/components/Admin/UserInfo';
 import { useParams } from 'react-router-dom';
 const AdminUserInfoPage = () => {
   const { id } = useParams();

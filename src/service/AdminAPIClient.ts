@@ -1,4 +1,4 @@
-import { UserUpdateDTO } from "@/components/AdminPage/UserInfo";
+import { UserUpdateDTO } from "@/components/Admin/UserInfo";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
  

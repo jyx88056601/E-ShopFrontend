@@ -1,5 +1,5 @@
-import { UserLoginDTO } from '../data/entities';
-import DefaultAPIClient from '../service/DefaultAPIClient';
+import { UserLoginDTO } from '../../data/entities';
+import DefaultAPIClient from '../../service/DefaultAPIClient';
 import {
   Button,
   FormControl,
@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 const LoginForm = () => {
   const { setUsername } = useUser();

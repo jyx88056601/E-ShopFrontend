@@ -8,10 +8,17 @@ const NavBar = () => {
 
   const clickHome = () => {
     const role = localStorage.getItem('role');
-    if (role && role.length >= 5) {
-      navigate('/' + role.substring(5).toLocaleLowerCase());
-    } else {
+    if (role == null) {
       navigate('/');
+      return;
+    }
+    const userRole = role.substring(5).toLocaleLowerCase();
+    if (userRole === 'seller') {
+      navigate('/business');
+    } else if (userRole === 'buyer') {
+      navigate('/personal');
+    } else {
+      navigate('/admin');
     }
   };
 
