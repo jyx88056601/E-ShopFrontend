@@ -1,4 +1,3 @@
-
 import {
   Box,
   Button,
@@ -13,16 +12,16 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BusinessAPIClient from "@/service/BusinessApiClient";
-import {ProdcutDetailDTO} from "@/data/entities";
-
+import BusinessAPIClient from '@/service/BusinessApiClient';
+import { ProdcutDetailDTO } from '@/data/entities';
 const ProductTable = () => {
+  const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize] = useState(5); // Items per page
+  // const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const pageSize = 5;
 
   const displayProductsByPages = async () => {
     const ownerId: string | null = localStorage.getItem('id');
@@ -51,17 +50,43 @@ const ProductTable = () => {
       .catch((error) => {
         console.error('Error fetching products:', error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
     displayProductsByPages();
   }, [currentPage]);
 
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = (newPage: number): void => {
     if (newPage >= 0 && newPage < totalPages) {
       setCurrentPage(newPage);
     }
+  };
+
+  const handleDeleteProduct = (id: string): void => {
+    const ownerId: string | null = localStorage.getItem('id');
+    const token: string | null = localStorage.getItem('token');
+    const username: string | null = localStorage.getItem('username');
+    if (ownerId === null || token === null || username === null) {
+      navigate('/login');
+      return;
+    }
+    const businessAPIClient = new BusinessAPIClient('/deleteBy' + id);
+    setLoading(true);
+    businessAPIClient
+      .deleteProductById(username, token)
+      .then((response) => {
+        console.log(response.data);
+        displayProductsByPages();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -80,7 +105,8 @@ const ProductTable = () => {
                 <Th>Stock</Th>
                 <Th>Created time</Th>
                 <Th>Last updated</Th>
-                <Th>Product Detail page</Th>
+                <Th>Delete</Th>
+                <Th>Update</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -92,8 +118,17 @@ const ProductTable = () => {
                   <Td>{item.price}</Td>
                   <Td>{item.stock}</Td>
                   <Td>{item.createdTime}</Td>
-                  <Th> {item.updatedTime}</Th>
-                  <Button>Button</Button>
+                  <Td> {item.updatedTime}</Td>
+                  <Td
+                    _hover={{
+                      bg: 'red.500',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => handleDeleteProduct(item.id)}
+                  >
+                    Delete
+                  </Td>
                 </Tr>
               ))}
             </Tbody>

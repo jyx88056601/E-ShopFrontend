@@ -1,6 +1,7 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import ProductTable from "@/components/Business/ProductTable";
-import ProductUploadingForm from "@/components/Business/ProductUploadingForm";
+import ProductTable from '@/components/Business/ProductTable';
+import ProductUploadingForm from '@/components/Business/ProductUploadingForm';
+
 const BusinessNavBar = () => {
   return (
     <Tabs>

@@ -49,6 +49,24 @@ class BusinessAPIClient {
         )
      }
 
+     public deleteProductById(username : string, token : string) : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL: this.baseUrl,
+            headers: {
+                Authorization: token ? `Bearer ${token}` : '',
+                'Content-Type': 'application/json', 
+              } 
+         })
+         return axiosInstance.delete(
+            this.endpoint,
+            { 
+                params: {
+                  username: username,
+                }
+            }
+         )
+     }
+
 }
 
 export default BusinessAPIClient;

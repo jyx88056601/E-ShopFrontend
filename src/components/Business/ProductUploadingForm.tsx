@@ -107,7 +107,8 @@ const ProductUploadingForm = () => {
         console.error('Upload failed', err);
         setIsLoading(false);
         setAlertInfo('Product upload failed. Please try again.');
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
