@@ -6,11 +6,9 @@ import App from './App.tsx';
 import { UserProvider } from './context/UserContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ChakraProvider theme={theme}>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </ChakraProvider>
-  </StrictMode>
+  <ChakraProvider theme={theme}>
+    <UserProvider>
+      <App />
+    </UserProvider>
+  </ChakraProvider>
 );

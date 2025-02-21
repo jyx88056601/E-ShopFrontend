@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
-
 class BusinessAPIClient {
     endpoint: string;
     baseUrl : string;

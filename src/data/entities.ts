@@ -27,7 +27,7 @@ export type ProductDTO = {
 }
 
 
-export type ProdcutDetailDTO = {
+export type ProductDetailDTO = {
     id : string;
     name: string;
     price: string;
@@ -36,4 +36,6 @@ export type ProdcutDetailDTO = {
     createdTime: string;
     updatedTime: string;
     awsUrls: string[];
+    mainPictureUrl: string;
+    description:string;
 }

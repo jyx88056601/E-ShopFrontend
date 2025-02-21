@@ -13,7 +13,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BusinessAPIClient from '@/service/BusinessApiClient';
-import { ProdcutDetailDTO } from '@/data/entities';
+import { ProductDetailDTO } from '@/data/entities';
 const ProductTable = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
@@ -110,7 +110,7 @@ const ProductTable = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {data.map((item: ProdcutDetailDTO) => (
+              {data.map((item: ProductDetailDTO) => (
                 <Tr key={item.id}>
                   <Td>{item.id}</Td>
                   <Td>{item.name}</Td>

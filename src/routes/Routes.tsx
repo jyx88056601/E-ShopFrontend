@@ -6,21 +6,34 @@ import AdminPage from '../pages/Admin/AdminPage';
 import LoginPage from '../pages/Default/LoginPage';
 import SignupPage from '../pages/Default/SignupPage';
 import AdminUserInfoPage from '@/pages/Admin/AdminUserInfoPage';
-import BusinessPage from "@/pages/Business/BusinessPage";
+import BusinessPage from '@/pages/Business/BusinessPage';
+import PersonalPage from '@/pages/Personal/PersonalPage';
+import ProductDetailPage from '@/pages/Personal/ProductDetailPage';
+import PersonalLayout from '@/pages/Personal/PersonalLayout';
+import Cart from '@/components/Personal/Cart';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
-    children: [
-      { path: '/', element: <Homepage /> },
-      { path: '/signup', element: <SignupPage /> },
-      { path: '/login', element: <LoginPage /> },
-      { path: '/admin', element: <AdminPage /> },
-      { path: '/admin/userinfo/:id', element: <AdminUserInfoPage /> },
-      { path: '/business', element: <BusinessPage /> },
-    ],
     errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Homepage /> },
+      { path: 'signup', element: <SignupPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'admin', element: <AdminPage /> },
+      { path: 'admin/userinfo/:id', element: <AdminUserInfoPage /> },
+      { path: 'business', element: <BusinessPage /> },
+      {
+        path: 'personal',
+        element: <PersonalLayout />,
+        children: [
+          { index: true, element: <PersonalPage /> },
+          { path: 'product/:product_id', element: <ProductDetailPage /> },
+          { path: 'cart', element: <Cart /> },
+        ],
+      },
+    ],
   },
 ]);
 

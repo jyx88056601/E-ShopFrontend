@@ -1,9 +1,8 @@
+import { ProductGrid } from '@/components/Personal/ProductGrid';
 import {
-  Box,
   Flex,
   Grid,
   GridItem,
-  Select,
   Heading,
   SimpleGrid,
   Show,
@@ -31,16 +30,16 @@ const Homepage = () => {
 
       <GridItem area="main">
         <Flex paddingLeft={2} marginBottom={5}>
-          <Box marginRight={5}>
+          {/* <Box marginRight={5}>
             <Select />
-          </Box>
-          <Box marginRight={5}>
+          </Box> */}
+          {/* <Box marginRight={5}>
             <Select />
-          </Box>
+          </Box> */}
           <Heading />
         </Flex>
         <SimpleGrid />
-        {/* <GameGrid /> */}
+        <ProductGrid></ProductGrid>
       </GridItem>
     </Grid>
   );
