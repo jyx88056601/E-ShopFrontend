@@ -1,3 +1,4 @@
+import { CartItemRequestDTO } from "@/data/entities";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 class PersonalAPIClient {
@@ -46,6 +47,43 @@ class PersonalAPIClient {
             {
                 params: {
                     username:this.username ,
+                }
+            }
+        )
+    }
+
+    public findCartById() : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance =  axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                }
+            }
+        )
+    }
+
+    public addCartItemsToCart(cartItemRequestDTOList :  CartItemRequestDTO[]) : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance =  axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.post(
+            this.endpoint,
+            cartItemRequestDTOList,
+            {
+                params: {
+                    username: this.username,
                 }
             }
         )

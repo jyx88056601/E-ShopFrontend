@@ -10,7 +10,7 @@ import BusinessPage from '@/pages/Business/BusinessPage';
 import PersonalPage from '@/pages/Personal/PersonalPage';
 import ProductDetailPage from '@/pages/Personal/ProductDetailPage';
 import PersonalLayout from '@/pages/Personal/PersonalLayout';
-import Cart from '@/components/Personal/Cart';
+import CartDetailPage from '@/pages/Personal/CartDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <PersonalPage /> },
           { path: 'product/:product_id', element: <ProductDetailPage /> },
-          { path: 'cart', element: <Cart /> },
+          { path: 'cart/user_id/:user_id', element: <CartDetailPage /> },
         ],
       },
     ],

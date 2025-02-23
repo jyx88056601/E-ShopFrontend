@@ -39,3 +39,8 @@ export type ProductDetailDTO = {
     mainPictureUrl: string;
     description:string;
 }
+
+export type  CartItemRequestDTO = {
+     product_id : string;
+     quantity : string;
+}

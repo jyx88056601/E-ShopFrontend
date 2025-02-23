@@ -1,4 +1,3 @@
-import { ProductGrid } from '@/components/Personal/ProductGrid';
 import {
   Flex,
   Grid,
@@ -39,7 +38,6 @@ const Homepage = () => {
           <Heading />
         </Flex>
         <SimpleGrid />
-        <ProductGrid></ProductGrid>
       </GridItem>
     </Grid>
   );

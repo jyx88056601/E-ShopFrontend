@@ -11,11 +11,11 @@ import Product from './Product';
 export const ProductGrid = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
-  const pageSize = 9;
+  const pageSize = 12;
   const [data, setData] = useState<ProductDetailDTO[]>([]);
   const [totalPages, setTotalPages] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
-  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [loading, setLoading] = useState(false);
   const displayProducts = async (page: number) => {
     if (!hasNextPage) return;
@@ -37,9 +37,10 @@ export const ProductGrid = () => {
       );
       setData((prevData) => [...prevData, ...response.data.content]);
       setTotalPages(response.data.totalPages);
-      setHasNextPage(response.data.number + 1 < totalPages);
+      setHasNextPage(response.data.number + 1 < response.data.totalPages);
       setCurrentPage(page);
     } catch (err) {
+      navigate('/login');
       console.log(err);
     }
     setLoading(false);

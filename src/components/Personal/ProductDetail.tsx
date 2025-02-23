@@ -7,14 +7,13 @@ import ImageDisplay from './ImageDisplay';
 import DescriptionDisplay from './DescriptionDisplay';
 
 type ProductDetailProps = {
-  product_id: string | undefined;
+  product_id: string;
 };
 
 const ProductDetail = ({ product_id }: ProductDetailProps) => {
   const navigate = useNavigate();
   const [product, setProduct] = useState<ProductDetailDTO>();
   const [images, setImages] = useState<string[]>([]);
-
   useEffect(() => {
     if (!product_id) return;
     const username = localStorage.getItem('username');
@@ -38,14 +37,14 @@ const ProductDetail = ({ product_id }: ProductDetailProps) => {
   }, []);
 
   return (
-    <Flex wrap="wrap" align="top" gap={'40px'}>
+    <Flex wrap="wrap" align="top" gap={'40px'} pl={'200px'}>
       <ImageDisplay images={images}></ImageDisplay>
       <DescriptionDisplay
         name={product?.name}
         price={product?.price}
         stock={product?.stock}
         category={product?.category}
-        id={product?.id}
+        id={product_id}
         description={product?.description}
       ></DescriptionDisplay>
     </Flex>

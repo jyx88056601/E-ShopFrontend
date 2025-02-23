@@ -5,20 +5,24 @@ import {
   Heading,
   Button,
   Card,
-  Flex,
+  HStack,
 } from '@chakra-ui/react';
+import AddToCartButton from './AddToCartButton';
+import { useState } from 'react';
 type DescriptionDisplayProps = {
   name: string | undefined;
   price: string | undefined;
   stock: string | undefined;
   category: string | undefined;
-  id: string | undefined;
+  id: string;
   description: string | undefined;
 };
 
 const DescriptionDisplay = (
   descriptionDisplayProps: DescriptionDisplayProps
 ) => {
+  const [count, setCount] = useState(1);
+
   return (
     <VStack pt={'20px'} pl={'5px'}>
       <Box textAlign="left">
@@ -29,13 +33,39 @@ const DescriptionDisplay = (
           <Heading colorScheme="white" size={'md'}>
             {'Price : $' + descriptionDisplayProps.price}{' '}
           </Heading>
+          <HStack pt={'20px'}>
+            <Box>
+              <Badge colorScheme="green">
+                {descriptionDisplayProps.stock + ' in stock'}
+              </Badge>
+            </Box>
+            <Box>
+              <Button
+                size={'sm'}
+                onClick={() => setCount((prev) => Math.max(prev - 1, 1))}
+              >
+                -
+              </Button>
+              <Badge fontSize={'xl'} color={'green.500'}>
+                {count}
+              </Badge>
+              <Button
+                size={'sm'}
+                onClick={() =>
+                  setCount((prev) =>
+                    Math.min(prev + 1, Number(descriptionDisplayProps.stock))
+                  )
+                }
+              >
+                +
+              </Button>
+            </Box>
+          </HStack>
           <Box pt={'15px'}>
-            <Badge colorScheme="green">
-              {descriptionDisplayProps.stock + ' in stock'}
-            </Badge>
-          </Box>
-          <Box pt={'15px'}>
-            <Button color={'whiteAlpha.900'}>Add to cart</Button>
+            <AddToCartButton
+              count={count}
+              product_id={descriptionDisplayProps.id}
+            ></AddToCartButton>
           </Box>
 
           <Box pt={'20px'}>

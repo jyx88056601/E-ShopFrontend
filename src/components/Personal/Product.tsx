@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardBody,
   Heading,
@@ -8,6 +7,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import AddToCartButton from './AddToCartButton';
 
 type ProductProps = {
   id: string;
@@ -46,9 +46,7 @@ const Product = ({ mainPictureUrl, price, name, id }: ProductProps) => {
             <Heading fontSize="large">{name}</Heading>
             <Heading fontSize="medium">{'$' + price}</Heading>
           </HStack>
-          <Button bg={'black'} color={'white'} width={'100%'}>
-            Add to Cart
-          </Button>
+          <AddToCartButton count={1} product_id={id}></AddToCartButton>
         </CardBody>
       </Tooltip>
     </Card>

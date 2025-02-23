@@ -8,7 +8,7 @@ const NavBar = () => {
 
   const clickHome = () => {
     const role = localStorage.getItem('role');
-    if (role == null) {
+    if (role === null) {
       navigate('/');
       return;
     }

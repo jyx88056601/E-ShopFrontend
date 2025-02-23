@@ -14,23 +14,9 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import NavLink from './Navlink';
 
 const Links = ['Cart', 'Orders', 'Shipment'];
-
-const NavLink = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    as="a"
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-  >
-    {children}
-  </Box>
-);
 
 const PersonalNavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -85,7 +71,7 @@ const PersonalNavBar = () => {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
-                <NavLink>{link}</NavLink>
+                <NavLink key={link}>{link}</NavLink>
               ))}
             </Stack>
           </Box>
