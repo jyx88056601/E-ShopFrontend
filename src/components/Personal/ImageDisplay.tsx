@@ -34,17 +34,14 @@ const ImageDisplay = ({ images }: ImageDisplayProps) => {
         />
 
         <Box position="relative" width="400px" mx="auto" overflow="hidden">
-          <Box
-            position="relative"
-            px="40px" // 为箭头按钮留出空间
-          >
+          <Box position="relative" px="40px">
             <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
               {images.map((img, index) => (
                 <Box
                   key={index}
                   itemID={String(index)}
                   padding="5px"
-                  minWidth="90px" // 确保缩略图有最小宽度
+                  minWidth="90px"
                 >
                   <Button
                     variant="ghost"

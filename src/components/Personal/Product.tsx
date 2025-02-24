@@ -23,7 +23,6 @@ type ProductProps = {
 
 const Product = ({ mainPictureUrl, price, name, id }: ProductProps) => {
   const navigate = useNavigate();
-
   const handleClickProduct = (id: string) => {
     navigate('/personal/product/' + id);
   };

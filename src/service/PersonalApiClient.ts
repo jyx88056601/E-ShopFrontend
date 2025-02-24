@@ -89,6 +89,26 @@ class PersonalAPIClient {
         )
     }
 
+    public deleteCartItems(ids : Set<string>) : Promise<AxiosResponse>{
+        const axiosInstance : AxiosInstance =  axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.delete(
+            this.endpoint,
+            {
+                params: {
+                   
+                    username: this.username,
+                },
+                data: Array.from(ids),   
+            }
+        )
+    }
+
 }
 
 export default PersonalAPIClient;
