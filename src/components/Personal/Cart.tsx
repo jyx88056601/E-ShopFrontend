@@ -41,7 +41,8 @@ type ProductSimplifiedResponseDTO = {
 };
 
 const Cart = () => {
-  const setItemCount = useCartStore((state) => state.setItemCount);
+  const cartState = useCartStore();
+
   const [deletedCartItemIds, setDeletedCartItemIds] = useState<Set<string>>(
     new Set()
   );
@@ -74,11 +75,11 @@ const Cart = () => {
       .addCartItemsToCart(cartItems)
       .then((response) => {
         if (response.status === 200) {
-          console.log('Cart items added to the database successfully');
+          console.log('upload cartitems to cart');
           localStorage.removeItem('cartitems');
         }
       })
-      .then(getCart)
+      .then(() => getCart())
       .catch((err) => console.log('Error adding cart items:', err));
   };
 
@@ -97,7 +98,7 @@ const Cart = () => {
         if (response.status === 204) {
           navigate('/personal');
         } else {
-          console.log('API Response:', response.data);
+          console.log('getCart().then - API Response:', response.data);
           setData(response.data);
           let newCount = 0;
           response.data.cartItemResponseDTOList.forEach(
@@ -105,7 +106,7 @@ const Cart = () => {
               newCount += Number(cartItem.quantity);
             }
           );
-          setItemCount(newCount); // 这里没有多余的括号
+          cartState.setItemCount(newCount);
         }
       })
       .catch((err) => {
@@ -115,11 +116,10 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const syncCart = async () => {
       await uploadCartItemsToDatabase();
-      await getCart();
     };
-    fetchData();
+    syncCart();
   }, []);
 
   const handleDeleteItem = (id: string) => {
