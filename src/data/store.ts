@@ -16,3 +16,37 @@ export const useCartStore = create<CartStore>((set) => ({
     resetItemCount: () => set({ itemCount: 0 }),
     setItemCount: (count: number) => set({ itemCount: count })
 }));
+
+
+type OrderRequestStore = {
+    merchant_id : string;
+    customer_id : string;
+    orderItemRequestDTOList : OrderItemRequestDTO[];
+    setMerchantId : (merchantId : string) => void;
+    setCustomerId : (CostomerId : string) => void;
+    setOrderItemRequestDTOList : (orderItemRequestList:  OrderItemRequestDTO[]) => void;
+}
+
+export type OrderItemRequestDTO = {
+    product_id : string;
+    quantity : string
+}
+
+export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
+  merchant_id: '',
+  customer_id: '',
+  orderItemRequestDTOList: [],
+  setMerchantId: (merchantId: string) => set((state) => ({ ...state, merchant_id: merchantId })),
+  setCustomerId: (customerId: string) => set((state) => ({ ...state, customer_id: customerId })),
+  setOrderItemRequestDTOList: (orderItemRequestList: OrderItemRequestDTO[]) => set((state) => ({ ...state, orderItemRequestDTOList: orderItemRequestList })),
+}));
+
+
+type PathStore = {
+    path : string;
+    setCurrentPath : (path : string) => void;
+}
+export const usePathStore = create<PathStore>((set) => ({
+    path : "orders",
+    setCurrentPath: (currentPath: string) => set({  path: currentPath })
+}));

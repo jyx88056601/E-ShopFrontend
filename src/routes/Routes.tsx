@@ -11,7 +11,8 @@ import PersonalPage from '@/pages/Personal/PersonalPage';
 import ProductDetailPage from '@/pages/Personal/ProductDetailPage';
 import PersonalLayout from '@/pages/Personal/PersonalLayout';
 import CartDetailPage from '@/pages/Personal/CartDetailPage';
-
+import CustomerOrderManagementPage from '@/pages/Personal/ CustomerOrderManagementPage';
+import PaymentPage from '@/pages/Personal/PaymentPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
           { index: true, element: <PersonalPage /> },
           { path: 'product/:product_id', element: <ProductDetailPage /> },
           { path: 'cart/user_id/:user_id', element: <CartDetailPage /> },
+          {
+            path: 'orders/user_id/:user_id',
+            element: <CustomerOrderManagementPage />,
+          },
+          {
+            path: 'payment/order_id/:orderId',
+            element: <PaymentPage />,
+          },
         ],
       },
     ],

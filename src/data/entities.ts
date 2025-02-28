@@ -44,3 +44,13 @@ export type  CartItemRequestDTO = {
      product_id : string;
      quantity : string;
 }
+
+export type OrderRequestDTO = {
+  orderItemRequestDTOList: OrderItemRequestDTO[];
+};
+
+export type OrderItemRequestDTO = {
+  productId: string;
+  quantity: string;
+  merchantId: string;
+};

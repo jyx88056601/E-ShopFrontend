@@ -1,6 +1,7 @@
 import { CartItemRequestDTO } from '@/data/entities';
 import { useCartStore } from '@/data/store';
 import { Button } from '@chakra-ui/react';
+import { useState } from 'react';
 type AddToCartButtonProps = {
   count: number;
   product_id: string;
@@ -8,6 +9,7 @@ type AddToCartButtonProps = {
 
 const AddToCartButton = ({ count, product_id }: AddToCartButtonProps) => {
   const cartStoreState = useCartStore();
+  const [disable, setDisable] = useState(false);
   const handleAddToCart = () => {
     let cartItems: CartItemRequestDTO[] = JSON.parse(
       localStorage.getItem('cartitems') || '[]'
@@ -32,10 +34,22 @@ const AddToCartButton = ({ count, product_id }: AddToCartButtonProps) => {
       cartStoreState.setItemCount(cartStoreState.itemCount + count);
     }
     localStorage.setItem('cartitems', JSON.stringify(cartItems));
+    setDisable(true);
   };
 
-  return (
+  return disable ? (
     <Button
+      disabled={disable}
+      bg={'black'}
+      color={'white'}
+      width={'100%'}
+      onClick={handleAddToCart}
+    >
+      Already in the cart
+    </Button>
+  ) : (
+    <Button
+      disabled={disable}
       bg={'black'}
       color={'white'}
       width={'100%'}

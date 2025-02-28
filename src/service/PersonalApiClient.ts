@@ -1,4 +1,4 @@
-import { CartItemRequestDTO } from "@/data/entities";
+import { CartItemRequestDTO, OrderRequestDTO} from "@/data/entities";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 class PersonalAPIClient {
@@ -101,10 +101,50 @@ class PersonalAPIClient {
             this.endpoint,
             {
                 params: {
-                   
                     username: this.username,
                 },
                 data: Array.from(ids),   
+            }
+        )
+    }
+
+    public placeOrder(orderRequestDTO:OrderRequestDTO) : Promise<AxiosResponse>{ 
+        const axiosInstance : AxiosInstance =  axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.post(
+            this.endpoint,
+            orderRequestDTO,
+            {
+                params: {
+                   
+                    username: this.username,
+                   
+                } 
+            }
+        )
+    }
+
+    public fetchOrders(page: string, size:string) : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance =  axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                    page: page,
+                    size:size
+                } 
             }
         )
     }
