@@ -51,13 +51,11 @@ const CustomerOrderManagementPage = () => {
         token
       );
       try {
-        const response = await apiClient.fetchOrders(
-          String(currentPage + 1),
-          '5'
-        );
+        const response = await apiClient.fetchOrders(String(currentPage), '5');
         const pagedData = response.data as PagedModel;
+        console.log(pagedData);
         setData(pagedData._embedded.orderResponseDTOList);
-        setTotalPages(pagedData.page.totalPages - 1);
+        setTotalPages(pagedData.page.totalPages);
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {

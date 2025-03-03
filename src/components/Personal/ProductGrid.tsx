@@ -19,7 +19,6 @@ export const ProductGrid = () => {
   const [loading, setLoading] = useState(false);
   const displayProducts = async (page: number) => {
     if (!hasNextPage) return;
-
     const endpoint = '/products';
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');
@@ -48,7 +47,7 @@ export const ProductGrid = () => {
 
   useEffect(() => {
     displayProducts(0);
-  }, []);
+  }, [totalPages]);
 
   return (
     <Box padding="5px">

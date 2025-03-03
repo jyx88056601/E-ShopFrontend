@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardBody,
   Heading,
@@ -21,7 +22,7 @@ type ProductProps = {
   mainPictureUrl: string;
 };
 
-const Product = ({ mainPictureUrl, price, name, id }: ProductProps) => {
+const Product = ({ mainPictureUrl, price, name, id, stock }: ProductProps) => {
   const navigate = useNavigate();
   const handleClickProduct = (id: string) => {
     navigate('/personal/product/' + id);
@@ -45,7 +46,13 @@ const Product = ({ mainPictureUrl, price, name, id }: ProductProps) => {
             <Heading fontSize="large">{name}</Heading>
             <Heading fontSize="medium">{'$' + price}</Heading>
           </HStack>
-          <AddToCartButton count={1} product_id={id}></AddToCartButton>
+          {stock === '0' ? (
+            <Button disabled width={'100%'}>
+              Sold out{' '}
+            </Button>
+          ) : (
+            <AddToCartButton count={1} product_id={id}></AddToCartButton>
+          )}
         </CardBody>
       </Tooltip>
     </Card>

@@ -45,6 +45,7 @@ const OrdersTable = ({
   const hanldePayment = (orderId: String) => {
     navigate('/personal/payment/order_id/' + orderId);
   };
+
   return (
     <TableContainer>
       {loading ? (
@@ -162,16 +163,17 @@ const OrdersTable = ({
 
       <Flex justify="center" mt={4} gap={2}>
         <Button
-          onClick={() => setCurrentPage(Math.max(currentPage - 1, 0))}
+          onClick={() => setCurrentPage(currentPage - 1)}
           isDisabled={currentPage === 0}
         >
           Prev
         </Button>
+
         <Button
-          onClick={() =>
-            setCurrentPage(Math.min(currentPage + 1, totalPages - 1))
-          }
-          isDisabled={currentPage === totalPages - 1}
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+          }}
+          disabled={currentPage === totalPages - 1}
         >
           Next
         </Button>

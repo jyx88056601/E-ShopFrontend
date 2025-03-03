@@ -35,9 +35,13 @@ const DescriptionDisplay = (
           </Heading>
           <HStack pt={'20px'}>
             <Box>
-              <Badge colorScheme="green">
-                {descriptionDisplayProps.stock + ' in stock'}
-              </Badge>
+              {descriptionDisplayProps.stock === '0' ? (
+                <Badge colorScheme="red">{'out of stock'}</Badge>
+              ) : (
+                <Badge colorScheme="green">
+                  {descriptionDisplayProps.stock + ' in stock'}
+                </Badge>
+              )}
             </Box>
             <Box>
               <Button
@@ -62,10 +66,14 @@ const DescriptionDisplay = (
             </Box>
           </HStack>
           <Box pt={'15px'}>
-            <AddToCartButton
-              count={count}
-              product_id={descriptionDisplayProps.id}
-            ></AddToCartButton>
+            {descriptionDisplayProps.stock === '0' ? (
+              <Button disabled>Sold out</Button>
+            ) : (
+              <AddToCartButton
+                count={count}
+                product_id={descriptionDisplayProps.id}
+              ></AddToCartButton>
+            )}
           </Box>
 
           <Box pt={'20px'}>

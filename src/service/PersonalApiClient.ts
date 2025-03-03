@@ -1,6 +1,10 @@
 import { CartItemRequestDTO, OrderRequestDTO} from "@/data/entities";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
+type InitializePaymentDTO = {
+    paymentMethod : string;
+}
+
 class PersonalAPIClient {
     endpoint: string;
     baseUrl : string;
@@ -144,6 +148,27 @@ class PersonalAPIClient {
                     username: this.username,
                     page: page,
                     size:size
+                } 
+            }
+        )
+    }
+
+  
+
+    public makePayment(initializePaymentDTO: InitializePaymentDTO) : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.post(
+            this.endpoint,
+           initializePaymentDTO,
+            {
+                params: {
+                    username: this.username,
                 } 
             }
         )
