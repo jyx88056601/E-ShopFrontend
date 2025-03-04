@@ -1,4 +1,4 @@
-import { HStack } from '@chakra-ui/react'; // horizontal stack
+import { Box, HStack } from '@chakra-ui/react'; // horizontal stack
 import { AiFillHome } from 'react-icons/ai';
 import UserStatus from './UserStatus';
 import { useNavigate } from 'react-router-dom';
@@ -23,18 +23,28 @@ const NavBar = () => {
   };
 
   return (
-    <HStack
-      backgroundColor={'blackAlpha.900'}
-      padding={2}
-      spacing="2px"
-      align="center"
-      justify="space-between"
+    <Box
+      as="nav"
+      position="fixed"
+      top="0"
+      left="0"
       w="100%"
-      px="24px"
+      zIndex="1000"
+      boxShadow="md"
     >
-      <AiFillHome color="white" size={25} onClick={clickHome} />
-      <UserStatus />
-    </HStack>
+      <HStack
+        backgroundColor={'blackAlpha.900'}
+        padding={2}
+        spacing="2px"
+        align="center"
+        justify="space-between"
+        w="100%"
+        px="24px"
+      >
+        <AiFillHome color="white" size={25} onClick={clickHome} />
+        <UserStatus />
+      </HStack>
+    </Box>
   );
 };
 

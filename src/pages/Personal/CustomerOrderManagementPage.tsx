@@ -67,7 +67,7 @@ const CustomerOrderManagementPage = () => {
   }, [currentPage]);
 
   return (
-    <Flex direction="column" align="center" w="100%">
+    <Flex direction="column" align="center" w="100%" pt={'20px'}>
       <OrdersTable
         orders={data}
         currentPage={currentPage}

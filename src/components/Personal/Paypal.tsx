@@ -1,7 +1,7 @@
 import PersonalAPIClient, {
   InitializePaymentDTO,
 } from '@/service/PersonalApiClient';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@chakra-ui/react';
 
@@ -63,17 +63,23 @@ const Paypal = ({ orderId }: PaypalProps) => {
     try {
       await createOrder();
     } catch (err) {
-      console.error('Error creat PayPal order:', err);
-    }
-    const paymentLink = paymentData?.links.find(
-      (link) => link.rel === 'payer-action'
-    );
-    if (paymentLink) {
-      window.open(paymentLink.href, '_blank');
-    } else {
-      console.error('No payer-action link found');
+      console.error('Error creating PayPal order:', err);
     }
   };
+
+  // useEffect to watch paymentData and trigger the payment link if data is ready
+  useEffect(() => {
+    if (paymentData) {
+      const paymentLink = paymentData.links.find(
+        (link) => link.rel === 'payer-action'
+      );
+      if (paymentLink) {
+        window.open(paymentLink.href, '_blank');
+      } else {
+        console.error('No payer-action link found');
+      }
+    }
+  }, [paymentData]);
 
   return (
     <div>

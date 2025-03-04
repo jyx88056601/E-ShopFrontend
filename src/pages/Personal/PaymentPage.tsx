@@ -9,7 +9,7 @@ const PaymentPage = () => {
     return <div>Error: Order ID is missing</div>;
   }
   return (
-    <Flex pl={'10px'} pt={'20px'}>
+    <Flex pl={'10px'} pt={'48px'}>
       <HStack>
         <Paypal orderId={orderId}></Paypal>
       </HStack>

@@ -1,7 +1,7 @@
 import { CartItemRequestDTO, OrderRequestDTO} from "@/data/entities";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
-type InitializePaymentDTO = {
+export type InitializePaymentDTO = {
     paymentMethod : string;
 }
 
