@@ -155,7 +155,7 @@ class PersonalAPIClient {
 
   
 
-    public makePayment(initializePaymentDTO: InitializePaymentDTO) : Promise<AxiosResponse> {
+    public createTransaction(initializePaymentDTO: InitializePaymentDTO) : Promise<AxiosResponse> {
         const axiosInstance : AxiosInstance = axios.create({
             baseURL : this.baseUrl,
             headers: {
@@ -173,6 +173,44 @@ class PersonalAPIClient {
             }
         )
     }
+
+    public getTransactionResult() : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+        )
+    }
+
+    public checkOrderPaymentStatus() : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+        )
+    }
+
+    
 
 }
 

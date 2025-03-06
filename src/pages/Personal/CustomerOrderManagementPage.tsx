@@ -32,37 +32,35 @@ const CustomerOrderManagementPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
-
   const user_id = localStorage.getItem('id');
   const username = localStorage.getItem('username');
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
+  const fetchOrders = async () => {
     if (!username || !token || !user_id) {
       navigate('/login');
       return;
     }
+    setLoading(true);
+    const apiClient = new PersonalAPIClient(
+      `/fetchOrders/user_id=${user_id}`,
+      username,
+      token
+    );
+    try {
+      const response = await apiClient.fetchOrders(String(currentPage), '5');
+      const pagedData = response.data as PagedModel;
+      console.log(pagedData);
+      setData(pagedData._embedded.orderResponseDTOList);
+      setTotalPages(pagedData.page.totalPages);
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchOrders = async () => {
-      setLoading(true);
-      const apiClient = new PersonalAPIClient(
-        `/fetchOrders/user_id=${user_id}`,
-        username,
-        token
-      );
-      try {
-        const response = await apiClient.fetchOrders(String(currentPage), '5');
-        const pagedData = response.data as PagedModel;
-        console.log(pagedData);
-        setData(pagedData._embedded.orderResponseDTOList);
-        setTotalPages(pagedData.page.totalPages);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchOrders();
   }, [currentPage]);
 

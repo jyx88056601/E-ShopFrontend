@@ -41,12 +41,24 @@ export const useOrderRequestStore = create<OrderRequestStore>((set) => ({
   setOrderItemRequestDTOList: (orderItemRequestList: OrderItemRequestDTO[]) => set((state) => ({ ...state, orderItemRequestDTOList: orderItemRequestList })),
 }));
 
-
 type PathStore = {
-    path : string;
-    setCurrentPath : (path : string) => void;
+    path: string;
+    setCurrentPath: (path: string) => void;
 }
+
 export const usePathStore = create<PathStore>((set) => ({
-    path : "orders",
-    setCurrentPath: (currentPath: string) => set({  path: currentPath })
+    path: "", 
+    setCurrentPath: (path) => set({ path })
 }));
+
+interface PaymentState {
+    refreshTrigger: boolean;
+    triggerRefresh: () => void;
+    resetTrigger: () => void;
+  }
+  
+  export const usePaymentStore = create<PaymentState>((set) => ({
+    refreshTrigger: false,
+    triggerRefresh: () => set({ refreshTrigger: true }),
+    resetTrigger: () => set({ refreshTrigger: false }),
+  }));

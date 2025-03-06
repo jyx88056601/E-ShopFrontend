@@ -8,6 +8,17 @@ import ProductSkeleton from './ProductSkeleton';
 import PersonalAPIClient from '@/service/PersonalApiClient';
 import Product from './Product';
 
+type PagedModel = {
+  _embedded: {
+    productDetailDTOList: ProductDetailDTO[];
+  };
+  page: {
+    size: number;
+    totalElements: number;
+    totalPages: number;
+    number: number;
+  };
+};
 export const ProductGrid = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(0);
@@ -34,9 +45,13 @@ export const ProductGrid = () => {
         page.toString(),
         pageSize.toString()
       );
-      setData((prevData) => [...prevData, ...response.data.content]);
-      setTotalPages(response.data.totalPages);
-      setHasNextPage(response.data.number + 1 < response.data.totalPages);
+      const data = response.data as PagedModel;
+      setData((prevData) => [
+        ...prevData,
+        ...data._embedded.productDetailDTOList,
+      ]);
+      setTotalPages(data.page.totalPages);
+      setHasNextPage(data.page.number + 1 < data.page.totalPages);
       setCurrentPage(page);
     } catch (err) {
       navigate('/login');

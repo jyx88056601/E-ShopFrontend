@@ -8,7 +8,7 @@ const PersonalNavBar = () => {
 
   return (
     <Flex bg={'blackAlpha.900'} justify={'center'}>
-      <HStack pt={'5px'}>
+      <HStack pt={'10px'}>
         <OrderButton
           currentPath={currentPath}
           setCurrentPath={setCurrentPath}

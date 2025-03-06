@@ -1,3 +1,4 @@
+import PersonalAPIClient from '@/service/PersonalApiClient';
 import { SearchIcon } from '@chakra-ui/icons';
 import {
   Table,
@@ -42,8 +43,27 @@ const OrdersTable = ({
   setCurrentPage,
 }: OrdersTableProps) => {
   const navigate = useNavigate();
+
   const hanldePayment = (orderId: String) => {
-    navigate('/personal/payment/order_id/' + orderId);
+    const user_id = localStorage.getItem('id');
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    if (!username || !token || !user_id) {
+      navigate('/login');
+      return;
+    }
+    const apiClient = new PersonalAPIClient(
+      `/payment/status/${orderId}`,
+      username,
+      token
+    );
+
+    apiClient
+      .checkOrderPaymentStatus()
+      .then(() => navigate(`/personal/payment/order_id/${orderId}`))
+      .catch(() => {
+        window.location.reload();
+      });
   };
 
   return (
@@ -122,9 +142,7 @@ const OrdersTable = ({
                     case 'PAID':
                       return (
                         <Td>
-                          <Button color={'green.500'}>
-                            Check payment Detail
-                          </Button>
+                          <Badge color={'green.500'}>PAID</Badge>
                         </Td>
                       );
                     case 'SHIPPING':

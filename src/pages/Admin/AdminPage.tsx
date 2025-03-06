@@ -1,7 +1,7 @@
 import { DataPanel } from '@/components/Admin/DataPanel';
 import AdminMenu from '@/components/Admin/AdminMenu';
 import { useState } from 'react';
-import { Heading } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
 const handleSequence = (sequenceNumber: number): string => {
   switch (sequenceNumber) {
@@ -27,11 +27,13 @@ const AdminPage = () => {
 
   return (
     <>
-      <Heading size={'sm'} textAlign="center">
-        {handleSequence(sequenceNumber)}
-      </Heading>
-      <AdminMenu setSequence={setSequenceNumber} />
-      <DataPanel sequenceNumber={sequenceNumber} />
+      <Box pt={'60px'}>
+        <Heading size={'sm'} textAlign="center">
+          {handleSequence(sequenceNumber)}
+        </Heading>
+        <AdminMenu setSequence={setSequenceNumber} />
+        <DataPanel sequenceNumber={sequenceNumber} />
+      </Box>
     </>
   );
 };
