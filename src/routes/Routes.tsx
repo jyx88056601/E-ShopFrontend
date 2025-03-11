@@ -13,6 +13,7 @@ import PersonalLayout from '@/pages/Personal/PersonalLayout';
 import CartDetailPage from '@/pages/Personal/CartDetailPage';
 import PaymentPage from '@/pages/Personal/PaymentPage';
 import CustomerOrderManagementPage from '@/pages/Personal/CustomerOrderManagementPage';
+import OrderDetailPage from '@/pages/Personal/OrderDetailPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -34,13 +35,15 @@ const router = createBrowserRouter([
           { path: 'cart/user_id/:user_id', element: <CartDetailPage /> },
           {
             path: 'orders/user_id/:user_id',
-            element: (
-              <CustomerOrderManagementPage></CustomerOrderManagementPage>
-            ),
+            element: <CustomerOrderManagementPage />,
           },
           {
             path: 'payment/order_id/:orderId',
             element: <PaymentPage />,
+          },
+          {
+            path: 'orders/user_id/:user_id/order_id/:orderId',
+            element: <OrderDetailPage />,
           },
         ],
       },

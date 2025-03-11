@@ -80,6 +80,8 @@ const OrdersTable = ({
               <Th>Order items</Th>
               <Th>Total Price</Th>
               <Th>Order Status</Th>
+              <Th></Th>
+              <Th>Content</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -141,9 +143,24 @@ const OrdersTable = ({
                       );
                     case 'PAID':
                       return (
-                        <Td>
-                          <Badge color={'green.500'}>PAID</Badge>
-                        </Td>
+                        <>
+                          <Td>
+                            <Badge color={'green.500'}>PAID</Badge>
+                          </Td>
+                          <Td>
+                            <Button
+                              color={'green.500'}
+                              _hover={{
+                                bg: 'green.500',
+                                transform: 'scale(1.05)',
+                              }}
+                              bgColor={'blackAlpha.900'}
+                              textColor={'whiteAlpha.900'}
+                            >
+                              Set Shipping Address
+                            </Button>
+                          </Td>
+                        </>
                       );
                     case 'SHIPPING':
                       return (
@@ -173,6 +190,21 @@ const OrdersTable = ({
                       </Td>;
                   }
                 })()}
+                <Td>
+                  <Button
+                    bgColor={'blackAlpha.900'}
+                    color={'whiteAlpha.900'}
+                    onClick={() => {
+                      const user_id = localStorage.getItem('id');
+                      const orderId = order.orderId;
+                      navigate(
+                        `/personal/orders/user_id/${user_id}/order_id/${orderId}`
+                      );
+                    }}
+                  >
+                    Detail
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>

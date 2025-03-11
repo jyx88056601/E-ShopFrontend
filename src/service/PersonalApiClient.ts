@@ -210,6 +210,23 @@ class PersonalAPIClient {
         )
     }
 
+    public fetchOrderDetail() :  Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+        )
+    }
     
 
 }
