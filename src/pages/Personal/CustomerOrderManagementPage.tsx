@@ -50,7 +50,6 @@ const CustomerOrderManagementPage = () => {
     try {
       const response = await apiClient.fetchOrders(String(currentPage), '5');
       const pagedData = response.data as PagedModel;
-      console.log(pagedData);
       setData(pagedData._embedded.orderResponseDTOList);
       setTotalPages(pagedData.page.totalPages);
     } catch (error) {

@@ -1,3 +1,5 @@
+import { CreatingAddressRequestDTO } from "@/components/Default/AddressForm";
+import { ShipmentRequestDTO } from "@/components/Personal/AddressSelection";
 import { CartItemRequestDTO, OrderRequestDTO} from "@/data/entities";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
@@ -227,7 +229,82 @@ class PersonalAPIClient {
             }
         )
     }
-    
+
+    public storeNewAddress(creatingAddressRequestDTO:CreatingAddressRequestDTO) : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.post(
+            this.endpoint,
+            creatingAddressRequestDTO,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+
+        )
+    }
+
+    public fetchAddressList() : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+
+        )
+    }
+
+    public initializeShipment(shipmentRequestDTO: ShipmentRequestDTO) : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.post(
+            this.endpoint,
+            shipmentRequestDTO,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+
+        )
+    }
+    public getSellerInfo() : Promise<AxiosResponse> {
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+        )
+    }
 
 }
 

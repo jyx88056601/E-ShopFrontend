@@ -156,12 +156,28 @@ const OrdersTable = ({
                               }}
                               bgColor={'blackAlpha.900'}
                               textColor={'whiteAlpha.900'}
+                              onClick={() =>
+                                navigate(
+                                  `/personal/shipping/order_id/${order.orderId}`
+                                )
+                              }
                             >
                               Set Shipping Address
                             </Button>
                           </Td>
                         </>
                       );
+
+                    case 'PROCESSING':
+                      return (
+                        <>
+                          <Td>
+                            <Badge color={'blue.500'}>Seller in Process</Badge>
+                          </Td>
+                          <Td></Td>
+                        </>
+                      );
+
                     case 'SHIPPING':
                       return (
                         <Td>

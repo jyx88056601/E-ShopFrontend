@@ -102,7 +102,7 @@ const Paypal = ({ orderId }: PaypalProps) => {
       await getPaymentStatus();
       setTimeout(() => {
         navigate('/personal/orders/user_id/' + localStorage.getItem('id'));
-      }, 1250);
+      }, 2000);
     } catch (err) {
       console.log(err);
     }
