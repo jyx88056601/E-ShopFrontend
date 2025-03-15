@@ -44,13 +44,17 @@ const SingleOrderDetail = () => {
       navigate('/login');
       return;
     }
-    const apiClient = new PersonalAPIClient(
-      `/seller/contact${data?.merchantId}`,
-      username,
-      token
-    );
-    const response = await apiClient.getSellerInfo();
-    setContact(response.data);
+    try {
+      const apiClient = new PersonalAPIClient(
+        `/seller/contact${data?.merchantId}`,
+        username,
+        token
+      );
+      const response = await apiClient.getSellerInfo();
+      setContact(response.data);
+    } catch (error) {
+      console.error('Error fetching contact info', error);
+    }
   };
 
   const fetchOrderDetails = async () => {
@@ -61,15 +65,20 @@ const SingleOrderDetail = () => {
       return;
     }
 
-    const apiClient = new PersonalAPIClient(
-      `/order/${orderId}`,
-      username,
-      token
-    );
-    const orderDetailResponse = await apiClient.fetchOrderDetail();
+    try {
+      const apiClient = new PersonalAPIClient(
+        `/order/${orderId}`,
+        username,
+        token
+      );
+      const orderDetailResponse = await apiClient.fetchOrderDetail();
 
-    if (orderDetailResponse?.data) {
-      setData(orderDetailResponse.data);
+      if (orderDetailResponse?.data) {
+        setData(orderDetailResponse.data);
+        console.log(orderDetailResponse.data);
+      }
+    } catch (error) {
+      console.error('Error fetching order details', error);
     }
   };
 
@@ -134,7 +143,7 @@ const SingleOrderDetail = () => {
           </Box>
 
           <Text fontSize="lg">
-            <strong>Order Created Time:</strong>
+            <strong>Order Created Time:</strong>{' '}
             {new Date(data.orderCreatedTime).toLocaleString()}
           </Text>
 
@@ -166,6 +175,152 @@ const SingleOrderDetail = () => {
               )}
             </Badge>
           </HStack>
+
+          <Divider borderColor="gray.600" />
+          <Text fontWeight="bold" fontSize="xl">
+            💳 Payment Details:
+          </Text>
+
+          <VStack align="start">
+            {data.paymentDetail && data.paymentDetail.includes('#') ? (
+              data.paymentDetail.split('#').map((detail, index) => {
+                switch (index) {
+                  case 0:
+                    return (
+                      <HStack key={index}>
+                        <Text color={'whiteAlpha.900'} fontSize={'sm'}>
+                          <strong>Time:</strong>
+                        </Text>
+                        <Text fontSize={'sm'}>{detail.split('.')[0]}</Text>
+                      </HStack>
+                    );
+                  case 1:
+                    return (
+                      <HStack key={index}>
+                        <Text color={'whiteAlpha.900'} fontSize={'sm'}>
+                          <strong>Transaction ID:</strong>
+                        </Text>
+                        <Text fontSize={'sm'}>{detail}</Text>
+                      </HStack>
+                    );
+                  case 2:
+                    return (
+                      <HStack key={index}>
+                        <Text color={'whiteAlpha.900'} fontSize={'sm'}>
+                          <strong>Transaction Status:</strong>
+                        </Text>
+                        <Text fontSize={'sm'}>{detail}</Text>
+                      </HStack>
+                    );
+                  case 3:
+                    return (
+                      <HStack key={index}>
+                        <Text color={'whiteAlpha.900'} fontSize={'sm'}>
+                          <strong>Paid By:</strong>
+                        </Text>
+                        <Text fontSize={'sm'}>{detail}</Text>
+                      </HStack>
+                    );
+                  default:
+                    return null;
+                }
+              })
+            ) : (
+              <Text color="white.900">No payment details available</Text>
+            )}
+          </VStack>
+
+          <Divider borderColor="gray.600" />
+          <Text fontWeight="bold" fontSize="xl">
+            🚚 Shipment Details:
+          </Text>
+          {data.shipmentDetail && data.shipmentDetail.includes('#') ? (
+            (() => {
+              const [
+                shipmentTime,
+                shipmentStatus,
+                trackingNumber,
+                addressInfo,
+              ] = data.shipmentDetail.split('#');
+
+              const addressRegex =
+                /Address\{id\s*='?(\d+)'?\s*recipientName='?([^']+)'?,\s*phoneNumber='?([^']+)'?,\s*HouseNumber='?([^']+)'?,\s*buildingNumber='?([^']+)'?,\s*unitNumber='?([^']+)'?,\s*streetName='?([^']+)'?,\s*community='?([^']*)'?,\s*district='?([^']*)'?,\s*city='?([^']+)'?,\s*province='?([^']+)'?,\s*country='?([^']+)'?,\s*postalCode='?([^']+)'?\}/;
+              const match = addressRegex.exec(addressInfo);
+
+              const fieldsToDisplay = [];
+
+              if (shipmentTime !== 'null') {
+                fieldsToDisplay.push(
+                  <Text fontSize="sm" key="shipmentTime">
+                    <strong>Shipment Time:</strong> {shipmentTime}
+                  </Text>
+                );
+              }
+
+              if (shipmentStatus && shipmentStatus !== 'null') {
+                fieldsToDisplay.push(
+                  <Text fontSize="sm" key="shipmentStatus">
+                    <strong>Shipment Status:</strong> {shipmentStatus}
+                  </Text>
+                );
+              }
+
+              if (trackingNumber !== 'null') {
+                fieldsToDisplay.push(
+                  <Text fontSize="sm" key="trackingNumber">
+                    <strong>Tracking Number:</strong> {trackingNumber}
+                  </Text>
+                );
+              }
+
+              if (match) {
+                if (match[2] !== 'null') {
+                  fieldsToDisplay.push(
+                    <Text fontSize="sm" key="recipientName">
+                      <strong>Recipient:</strong> {match[2]}
+                    </Text>
+                  );
+                }
+
+                if (match[3] !== 'null') {
+                  fieldsToDisplay.push(
+                    <Text fontSize="sm" key="phoneNumber">
+                      <strong>Phone:</strong> {match[3]}
+                    </Text>
+                  );
+                }
+
+                const addressParts = [
+                  match[5],
+                  match[4],
+                  match[6],
+                  match[7],
+                  match[8],
+                  match[9],
+                  match[10],
+                  match[11],
+                  match[12],
+                  match[13],
+                ];
+
+                const fullAddress = addressParts
+                  .filter((part) => part && part !== 'null')
+                  .join(' ');
+
+                if (fullAddress) {
+                  fieldsToDisplay.push(
+                    <Text fontSize="sm" key="shippingAddress">
+                      <strong>Address:</strong> {fullAddress}
+                    </Text>
+                  );
+                }
+              }
+
+              return <>{fieldsToDisplay}</>;
+            })()
+          ) : (
+            <Text color="white.900">No shipment found</Text>
+          )}
 
           <Divider borderColor="gray.600" />
           <Text fontWeight="bold" fontSize="xl">
@@ -205,153 +360,6 @@ const SingleOrderDetail = () => {
               </HStack>
             );
           })}
-
-          <Box p={4} bg="gray.800" borderRadius="md" w="full" boxShadow="md">
-            <Text fontSize="xl" fontWeight="bold">
-              Total Amount:
-            </Text>
-            <Text fontSize="2xl" color="green.400">
-              💰 ${data.totalAmount}
-            </Text>
-          </Box>
-
-          <Box
-            p={4}
-            bg="gray.800"
-            borderRadius="md"
-            w="full"
-            boxShadow="md"
-            border="1px solid #444"
-          >
-            <Text fontWeight="bold" fontSize="lg">
-              💳 Payment Detail:
-            </Text>
-            <VStack align="start" spacing={2}>
-              {data.paymentDetail ? (
-                (() => {
-                  const [time, transactionId, paymentStatus, paymentMethod] =
-                    data.paymentDetail.split('#');
-                  const formattedPaymentStatus =
-                    paymentStatus === 'null' ? 'Unknown' : paymentStatus;
-                  const formattedPaymentMethod =
-                    paymentMethod === 'null' ? 'Unknown' : paymentMethod;
-
-                  return (
-                    <>
-                      <Text fontSize="sm">
-                        <strong>Time:</strong>{' '}
-                        {time.split('T')[0] +
-                          ' ' +
-                          time.split('T')[1].split('.')[0] || 'Unknown'}
-                      </Text>
-                      <Text fontSize="sm">
-                        <strong>Transaction ID:</strong>{' '}
-                        {transactionId || 'Unknown'}
-                      </Text>
-                      <Text fontSize="sm">
-                        <strong>Payment Status:</strong>{' '}
-                        {formattedPaymentStatus}
-                      </Text>
-                      <Text fontSize="sm">
-                        <strong>Payment Method:</strong>{' '}
-                        {formattedPaymentMethod}
-                      </Text>
-                    </>
-                  );
-                })()
-              ) : (
-                <Text fontSize="sm" color="gray.500">
-                  Payment details not available.
-                </Text>
-              )}
-            </VStack>
-          </Box>
-
-          <Box p={4} bg="gray.800" borderRadius="md" w="full" boxShadow="md">
-            <Text fontWeight="bold" fontSize="lg">
-              🚚 Shipment Detail:
-            </Text>
-            <VStack align="start" spacing={2}>
-              {data.shipmentDetail ? (
-                (() => {
-                  const [
-                    shipmentTime,
-                    shipmentStatus,
-                    trackingNumber,
-                    addressInfo,
-                  ] = data.shipmentDetail.split('#');
-
-                  const addressRegex =
-                    /Address\{id\s*='?(\d+)'?\s*recipientName='?([^']+)'?,\s*phoneNumber='?([^']+)'?,\s*HouseNumber='?([^']+)'?,\s*buildingNumber='?([^']+)'?,\s*unitNumber='?([^']+)'?,\s*streetName='?([^']+)'?,\s*community='?([^']*)'?,\s*district='?([^']*)'?,\s*city='?([^']+)'?,\s*province='?([^']+)'?,\s*country='?([^']+)'?,\s*postalCode='?([^']+)'?\}/;
-                  const match = addressRegex.exec(addressInfo);
-
-                  return (
-                    <>
-                      <Text fontSize="sm">
-                        <strong>Shipment Time:</strong>{' '}
-                        {shipmentTime === 'null'
-                          ? 'Not Available'
-                          : shipmentTime}
-                      </Text>
-                      <Text fontSize="sm">
-                        <strong>Shipment Status:</strong>{' '}
-                        {shipmentStatus || 'Unknown'}
-                      </Text>
-                      <Text fontSize="sm">
-                        <strong>Tracking Number:</strong>{' '}
-                        {trackingNumber === 'null'
-                          ? 'Not Available'
-                          : trackingNumber}
-                      </Text>
-
-                      {match ? (
-                        <Box p={3} bg="gray.700" borderRadius="md" w="full">
-                          <Text fontWeight="bold" fontSize="md">
-                            📍 Shipping Address:
-                          </Text>
-                          {match[2] !== 'null' && (
-                            <Text fontSize="sm">
-                              <strong>Recipient:</strong> {match[2]}
-                            </Text>
-                          )}
-                          {match[3] !== 'null' && (
-                            <Text fontSize="sm">
-                              <strong>Phone:</strong> {match[3]}
-                            </Text>
-                          )}
-                          <Text fontSize="sm">
-                            <strong>Address:</strong>{' '}
-                            {[
-                              match[4] !== 'null' ? match[4] : '',
-                              match[6] !== 'null' ? `Unit ${match[6]}` : '',
-                              match[5] !== 'null' ? match[5] : '',
-                              match[7] !== 'null' ? match[7] : '',
-                              match[8] !== 'null' ? match[8] : '',
-                              match[9] !== 'null' ? match[9] : '',
-                              match[10] !== 'null' ? match[10] : '',
-                              match[11] !== 'null' ? match[11] : '',
-                              match[12] !== 'null' ? match[12] : '',
-                              match[13] !== 'null' ? match[13] : '',
-                            ]
-                              .filter(Boolean)
-                              .join(', ')}
-                          </Text>
-                        </Box>
-                      ) : (
-                        <Text fontSize="sm" color="gray.500">
-                          Address information not available.
-                        </Text>
-                      )}
-                    </>
-                  );
-                })()
-              ) : (
-                <Text fontSize="sm" color="gray.500">
-                  Shipment details not available.
-                </Text>
-              )}
-            </VStack>
-          </Box>
         </VStack>
       ) : (
         <Text fontSize="xl" color="gray.500">

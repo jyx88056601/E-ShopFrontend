@@ -1,23 +1,24 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import ProductTable from '@/components/Business/ProductTable';
 import ProductUploadingForm from '@/components/Business/ProductUploadingForm';
+import BusinessOrderTable from './BusinessOrderTable';
 
 const BusinessNavBar = () => {
   return (
     <Tabs>
       <TabList>
-        <Tab>Product</Tab>
-        <Tab>Order</Tab>
-        <Tab>Income</Tab>
+        <Tab>Order Management</Tab>
+        <Tab>Product Management</Tab>
+        <Tab>Transaction Review</Tab>
       </TabList>
 
       <TabPanels>
         <TabPanel>
-          <ProductUploadingForm></ProductUploadingForm>
-          <ProductTable></ProductTable>
+          <BusinessOrderTable></BusinessOrderTable>
         </TabPanel>
         <TabPanel>
-          <p>Check orders status</p>
+          <ProductUploadingForm></ProductUploadingForm>
+          <ProductTable></ProductTable>
         </TabPanel>
         <TabPanel>
           <p>Check transaction data</p>

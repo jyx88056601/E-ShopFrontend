@@ -14,10 +14,11 @@ import {
   Text,
   Badge,
   Tooltip,
+  Box,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-interface Order {
+export interface Order {
   orderId: string;
   customerId: string;
   orderNumber: string;
@@ -27,7 +28,7 @@ interface Order {
   totalPrice: string;
 }
 
-type OrdersTableProps = {
+export type OrdersTableProps = {
   orders: Order[];
   currentPage: number;
   totalPages: number;
@@ -35,7 +36,7 @@ type OrdersTableProps = {
   setCurrentPage: (page: number) => void;
 };
 
-const OrdersTable = ({
+export const OrdersTable = ({
   orders = [],
   currentPage,
   totalPages,
@@ -76,19 +77,21 @@ const OrdersTable = ({
         <Table>
           <Thead>
             <Tr>
-              <Th>Created Time</Th>
-              <Th>Order items</Th>
-              <Th>Total Price</Th>
-              <Th>Order Status</Th>
-              <Th></Th>
-              <Th>Content</Th>
+              <Th textAlign="center">Created Time</Th>
+              <Th textAlign="center">Order items</Th>
+              <Th textAlign="center">Total Price</Th>
+              <Th textAlign="center">Order Status</Th>
+              <Th textAlign="center">Action</Th>
+              <Th textAlign="center">Content</Th>
             </Tr>
           </Thead>
           <Tbody>
             {orders.map((order) => (
               <Tr key={order.orderId}>
-                <Td>{new Date(order.createdTime).toLocaleString()}</Td>
-                <Td>
+                <Td textAlign="center">
+                  {new Date(order.createdTime).toLocaleString()}
+                </Td>
+                <Td textAlign="center">
                   <Flex justify="center" align="center">
                     <Tooltip
                       key={order.orderId}
@@ -114,18 +117,20 @@ const OrdersTable = ({
                     </Tooltip>
                   </Flex>
                 </Td>
-                <Td>${parseFloat(order.totalPrice || '0').toFixed(2)}</Td>
+                <Td textAlign="center">
+                  ${parseFloat(order.totalPrice || '0').toFixed(2)}
+                </Td>
                 {(() => {
                   switch (order.orderStatus) {
                     case 'UNPAID':
                       return (
                         <>
-                          <Td>
+                          <Td textAlign="center">
                             <Badge color={'orange.500'}>
                               Waiting for Payment
                             </Badge>
                           </Td>
-                          <Td>
+                          <Td textAlign="center">
                             <Button
                               color={'green.500'}
                               _hover={{
@@ -144,25 +149,43 @@ const OrdersTable = ({
                     case 'PAID':
                       return (
                         <>
-                          <Td>
+                          <Td textAlign="center">
                             <Badge color={'green.500'}>PAID</Badge>
                           </Td>
-                          <Td>
+                          <Td textAlign="center">
                             <Button
-                              color={'green.500'}
+                              colorScheme="yellow"
+                              bg="yellow.400"
                               _hover={{
-                                bg: 'green.500',
-                                transform: 'scale(1.05)',
+                                bg: 'yellow.300',
+                                transform: 'scale(1.1)',
+                                boxShadow: '0 0 10px rgba(255, 215, 0, 0.8)',
                               }}
-                              bgColor={'blackAlpha.900'}
-                              textColor={'whiteAlpha.900'}
+                              textColor="black"
+                              fontSize="lg"
+                              fontWeight="bold"
+                              px={6}
+                              py={4}
+                              borderRadius="full"
                               onClick={() =>
                                 navigate(
                                   `/personal/shipping/order_id/${order.orderId}`
                                 )
                               }
                             >
-                              Set Shipping Address
+                              <Box position="inherit" display="inline-block">
+                                <Text
+                                  as="span"
+                                  color="red.500"
+                                  fontSize="sm"
+                                  position="absolute"
+                                  top="-8px"
+                                  left="-8px"
+                                >
+                                  *
+                                </Text>
+                                <Text>Select Address</Text>
+                              </Box>
                             </Button>
                           </Td>
                         </>
@@ -171,24 +194,31 @@ const OrdersTable = ({
                     case 'PROCESSING':
                       return (
                         <>
-                          <Td>
+                          <Td textAlign="center">
                             <Badge color={'blue.500'}>Seller in Process</Badge>
                           </Td>
-                          <Td></Td>
+                          <Td textAlign="center">
+                            <Badge>Please wait for shipment</Badge>
+                          </Td>
                         </>
                       );
 
                     case 'SHIPPING':
                       return (
-                        <Td>
-                          <Button color={'green.500'}>
-                            Track your package
-                          </Button>
-                        </Td>
+                        <>
+                          <Td textAlign="center">
+                            <Badge>SHIPPING</Badge>
+                          </Td>
+                          <Td textAlign="center">
+                            <Button color={'green.500'}>
+                              Track your package
+                            </Button>
+                          </Td>
+                        </>
                       );
                     case 'SHIPPED':
                       return (
-                        <Td>
+                        <Td textAlign="center">
                           <Button color={'green.500'}>
                             Track your package
                           </Button>
@@ -196,17 +226,19 @@ const OrdersTable = ({
                       );
                     case 'COMPLETE':
                       return (
-                        <Td>
+                        <Td textAlign="center">
                           <Button color={'green.500'}>Order detail</Button>
                         </Td>
                       );
                     default:
-                      <Td>
-                        return <Text color={'red.500'}>Canced</Text>;
-                      </Td>;
+                      return (
+                        <Td textAlign="center">
+                          <Text color={'red.500'}>Canced</Text>
+                        </Td>
+                      );
                   }
                 })()}
-                <Td>
+                <Td textAlign="center">
                   <Button
                     bgColor={'blackAlpha.900'}
                     color={'whiteAlpha.900'}
@@ -218,7 +250,7 @@ const OrdersTable = ({
                       );
                     }}
                   >
-                    Detail
+                    Order Detail
                   </Button>
                 </Td>
               </Tr>
