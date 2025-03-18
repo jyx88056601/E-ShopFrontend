@@ -45,7 +45,8 @@ export const OrdersTable = ({
 }: OrdersTableProps) => {
   const navigate = useNavigate();
 
-  const hanldePayment = (orderId: String) => {
+  const hanldePayment = (orderId: string) => {
+    localStorage.setItem('currentOrderId', orderId);
     const user_id = localStorage.getItem('id');
     const username = localStorage.getItem('username');
     const token = localStorage.getItem('token');

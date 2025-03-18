@@ -9,7 +9,6 @@ import {
   Text,
   VStack,
   Image,
-  Button,
 } from '@chakra-ui/react';
 
 export interface OrderDetailDTO {
@@ -30,11 +29,7 @@ interface BusinessOrderDetailProps {
   onFetchContact: () => void;
 }
 
-const BusinessOrderDetail = ({
-  data,
-  contact,
-  onFetchContact,
-}: BusinessOrderDetailProps) => {
+const BusinessOrderDetail = ({ data }: BusinessOrderDetailProps) => {
   return (
     <Flex
       direction="column"
@@ -55,44 +50,6 @@ const BusinessOrderDetail = ({
             <Text fontSize="lg">
               <strong>Order Number:</strong> {data.orderNumber}
             </Text>
-            {contact === '' ? (
-              <Button
-                width="full"
-                mt={4}
-                colorScheme="teal"
-                onClick={onFetchContact}
-                size="lg"
-                borderRadius="md"
-                boxShadow="md"
-              >
-                Reach Out to Seller
-              </Button>
-            ) : (
-              <Box
-                p={4}
-                bg="gray.800"
-                borderRadius="md"
-                boxShadow="md"
-                width="full"
-                mt={4}
-              >
-                <Text fontWeight="bold" fontSize="lg" color="teal.300">
-                  Merchant Contact Information
-                </Text>
-                <Divider my={3} borderColor="gray.600" />
-                <VStack align="start" spacing={3} color="white">
-                  <Text>
-                    <strong>Merchant Name:</strong> {contact.split('#')[0]}
-                  </Text>
-                  <Text>
-                    <strong>Phone Number:</strong> {contact.split('#')[1]}
-                  </Text>
-                  <Text>
-                    <strong>Email Address:</strong> {contact.split('#')[2]}
-                  </Text>
-                </VStack>
-              </Box>
-            )}
           </Box>
           <Text fontSize="lg">
             <strong>Order Created Time:</strong>{' '}
