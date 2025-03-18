@@ -15,6 +15,7 @@ import PaymentPage from '@/pages/Personal/PaymentPage';
 import CustomerOrderManagementPage from '@/pages/Personal/CustomerOrderManagementPage';
 import OrderDetailPage from '@/pages/Personal/OrderDetailPage';
 import ShippingPage from '@/pages/Personal/ShippingPage';
+import ReturnPage from '@/pages/Personal/ReturnPage';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
           {
             path: 'shipping/order_id/:orderId',
             element: <ShippingPage />,
+          },
+          {
+            path: 'return',
+            element: <ReturnPage />,
           },
         ],
       },

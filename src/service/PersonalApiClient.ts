@@ -1,5 +1,6 @@
 import { CreatingAddressRequestDTO } from "@/components/Default/AddressForm";
 import { ShipmentRequestDTO } from "@/components/Personal/AddressSelection";
+import { StripeRequestDTO } from "@/components/Personal/Stripe";
 import { CartItemRequestDTO, OrderRequestDTO} from "@/data/entities";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
@@ -301,6 +302,45 @@ class PersonalAPIClient {
             {
                 params: {
                     username: this.username,
+                } 
+            }
+        )
+    }
+
+    public createStripeSession(stripeRequestDTO: StripeRequestDTO) :  Promise<AxiosResponse> { 
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.post(
+            this.endpoint,
+            stripeRequestDTO,
+            {
+                params: {
+                    username: this.username,
+                } 
+            }
+        )
+    }
+
+    public fetchStripeSession(session_id : string, orderId :string) :  Promise<AxiosResponse> { 
+        const axiosInstance : AxiosInstance = axios.create({
+            baseURL : this.baseUrl,
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+                'Content-Type': 'application/json', 
+              } 
+        })
+        return axiosInstance.get(
+            this.endpoint,
+            {
+                params: {
+                    username: this.username,
+                    session_id : session_id,
+                    orderId: orderId
                 } 
             }
         )
